@@ -1,0 +1,60 @@
+<div class="layui-form layuimini-form" lay-filter="elegant" id="elegant">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label ">姓名：</label>
+        <div class="layui-input-block">
+            <span id="name" name="name"></span>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label ">性别：</label>
+        <div class="layui-input-block">
+            <span id="gender" name="gender"></span>
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label ">履历：</label>
+        <div class="layui-input-block">
+            <span id="resume" name="resume"></span>
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label ">座右铭：</label>
+        <div class="layui-input-block">
+            <span id="motto" name="motto"></span>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label ">个人风采：</label>
+
+        <div id="elegant1" style="margin-left: 150px"></div>
+    </div>
+
+
+</div>
+<style>
+   div>span{
+       margin-top: 30px;
+       margin-bottom: 5px;
+   }
+</style>
+<script>
+
+    layui.use(['form', 'table','miniPage','element'],function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table,
+            miniPage = layui.miniPage;
+        var elegantdata=parent.elegantdata;
+        $("#name").append(elegantdata.name)
+        if(elegantdata.gender==0)
+            $("#gender").append("女")
+        else if(elegantdata.gender==1)
+            $("#gender").append("男")
+        $("#resume").append(elegantdata.resume)
+        $("#motto").append(elegantdata.motto)
+        $("#elegant1").append(elegantdata.elegant)
+
+
+    })
+</script>

@@ -1,0 +1,100 @@
+{
+  "homeInfo": {
+    "title": "首页",
+    "href": "pages/upload_news.html"
+  },
+  "logoInfo": {
+    "title": "校园资讯",
+    "image": "images/logo.png",
+    "href": ""
+  },
+  "menuInfo": [
+    {
+      "title": "首页",
+      "icon": "fa fa-address-book",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "新闻管理",
+          "href": "",
+          "icon": "fa fa-home",
+          "target": "_self",
+          "child": [
+            {
+              "title": "新闻上传",
+              "href": "pages/upload_news.html",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "新闻列表",
+              "href": "pages/news_list.html",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "用户管理",
+          "href": "",
+          "icon": "fa fa-window-maximize",
+          "target": "_self",
+          "child": [
+            {
+              "title": "用户列表",
+              "href": "pages/user_list.html",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "添加用户",
+              "href": "pages/add_user.html",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            }
+          ]
+        },
+
+        {
+          "title": "风采人物",
+          "href": "",
+          "icon": "fa fa-window-maximize",
+          "target": "_self",
+          "child": [
+            {
+              "title": "人物列表",
+              "href": "pages/elegant_list.html",
+              "icon": "fa fa-hourglass-end",
+              "target": "_self"
+            },
+            {
+              "title": "添加人物",
+              "href": "pages/add_elegant.html",
+              "icon": "fa fa-hourglass-end",
+              "target": "_self"
+            }
+          ]
+        },
+
+        {
+          "title": "异常页面",
+          "href": "",
+          "icon": "fa fa-home",
+          "target": "_self",
+          "child": [
+            {
+              "title": "404页面",
+              "href": "pages/404.html",
+              "icon": "fa fa-hourglass-end",
+              "target": "_self"
+            }
+          ]
+        }
+
+      ]
+    }
+
+
+  ]
+}

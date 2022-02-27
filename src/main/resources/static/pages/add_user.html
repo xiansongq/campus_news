@@ -1,0 +1,170 @@
+<div class="layuimini-main">
+
+    <div class="layui-form layuimini-form" lay-filter="user" id="user">
+        <div class="layui-form-item">
+            <label class="layui-form-label required">账号</label>
+            <div class="layui-input-block">
+                <input type="text" name="userid" lay-verify="required" lay-reqtext="账号不能为空" placeholder="请输入用户名"
+                       value="" class="layui-input">
+
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">姓名</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" lay-verify="required" lay-reqtext="姓名不能为空" placeholder="请输入姓名" value=""
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">性别</label>
+            <div class="layui-input-block">
+                <input type="radio" name="gender" value="1" title="男" checked="">
+                <input type="radio" name="gender" value="0" title="女">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">手机</label>
+            <div class="layui-input-block">
+                <input type="number" name="phone" lay-verify="required" lay-reqtext="手机不能为空" placeholder="请输入手机"
+                       value="" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">学院</label>
+            <div class="layui-input-inline" id="div3">
+<!--            <select id="college">-->
+<!--                <option value="">请选择学院</option>-->
+<!--            </select>-->
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">专业</label>
+            <div class="layui-input-inline" id="div4">
+
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    layui.use(['form', 'table', 'tableSelect'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            table = layui.table,
+            $ = layui.$,
+            tableSelect = layui.tableSelect;
+
+        /**
+         * 第一个select
+         */
+
+        $(function () {
+            layui.use(['form'],function () {
+                var form=layui.form;
+
+
+                var t1 = '<select name="college" id="college" lay-filter="college">\n' +
+                    '                    <option value="">请选择学院</option>\n' +
+                    '                '
+                var t3 = '</select>'
+                var t2 = ""
+                $.getJSON('api/school.json', function (data) {
+                    //console.log(data)
+
+                    $.each(data, function (index, value) {
+
+                       t2 += '<option value="' + value.college + '">' + value.college + '</option>'
+                       // $('#college').append(new Option(value.college, value.college));	// 下拉菜单里添加元素
+                        //t1+='<option>'+value.college+'</option>'
+                    });
+                    $("#div3").html(t1 + t2 + t3)
+
+                     form.render();
+                })
+                form.render();
+
+                // $("#college").change(function () {
+                //     var selected=$(this).children('option:selected').val();
+                //     alert(selected);
+                // })
+
+                // 第二步 监听父级，每当父级发生变化时，渲染子级的值
+                form.on('select(college)', function (data) {
+
+                    var college1 = data.value; // roomName 选中的科室名称
+                    var k1='<select name="major" id="major">\n' +
+                        '                    <option value="">请选择专业</option>\n' +
+                        '                '
+                    var k2="";
+                    var k3='</select>'
+                    $.getJSON('api/school.json', function (data) {
+
+                        $.each(data, function (index, value) {
+                            if (value.college == college1) {
+                                $("#major").empty();
+                                $.each(value.major, function (index, val) {
+                                   // $('#major').append(new Option(val, val));	// 下拉菜单里添加元素
+                                    k2+='<option value="'+val+'">'+val+'</option>'
+                                })
+
+                            }
+
+                        });
+                        $("#div4").html(k1+k2+k3)
+
+                        form.render();
+                    })
+                });
+                form.render();
+
+            })
+
+
+        })
+
+        form.render();
+
+
+        // 当前弹出层，防止ID被覆盖
+        var parentIndex = layer.index;
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            console.log(data)
+            if (data.field.college == "" || data.field.major == "") {
+                layer.msg("请选择院系信息！")
+                return false;
+            }
+            $.ajax({
+                url: '../admin/add_user',
+                data: data.field,
+                method: 'POST',
+                async: false,
+                dataType: 'json',
+                success: (res) => {
+                    if (res.flag == 1) {
+                        layer.msg("添加成功！");
+                        layer.close(parentIndex);
+                        //tableId表格id  重载表格
+                        parent.layui.table.reload('currentTableId', {page: {curr: 1}});
+                    } else
+                        layer.msg("添加失败！")
+                }
+            })
+
+            return false;
+        });
+
+    });
+</script>

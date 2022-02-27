@@ -1,0 +1,39 @@
+
+
+spring:
+  datasource:
+    druid:
+      url: jdbc:mysql://localhost:3306/campus_news?serverTimezone=UTC
+      username: user
+      password: useruser
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  ervlet:
+    multipart:
+      max-file-size: 200MB #单个文件上传大小
+      max-request-size: 600MB #连续上传文件大小
+
+
+
+# mybatis
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml # mapper映射文件路径
+  type-aliases-package: com.daomain
+
+  # config-location:  # 指定mybatis的核心配置文件
+
+#logging:
+#  # 设置logback.xml位置
+#  #  config: classpath:log/logback.xml
+#  # 设置log4j.properties位置
+#  config: classpath:log4j.properties
+
+logging:
+    level:
+    com.tj.mapper: trace
+
+# pagehelper
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql

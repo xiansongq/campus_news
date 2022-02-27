@@ -1,0 +1,248 @@
+<div class="layuimini-main">
+
+    <div class="layui-form layuimini-form" lay-filter="news" id="news" enctype="multipart/form-data">
+        <div class="layui-form-item">
+            <label class="layui-form-label">新闻类别：</label>
+            <div class="layui-input-inline ">
+                <div id="div1" ></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">新闻标题：</label>
+            <div class="layui-input-block">
+                <input type="text" name="title" id="title" lay-verify="required" lay-reqtext="标题不能为空" placeholder="请输入新闻标题" value="" class="layui-input">
+
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">作者：</label>
+            <div class="layui-input-block">
+                <input type="text" name="author" id="author" lay-verify="required" lay-reqtext="作者不能为空" placeholder="请输入作者" value="" class="layui-input">
+            </div>
+        </div>
+
+
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">内容：</label>
+
+
+                <div id="editor" style="margin-top: 50px;margin-left: 150px" >
+                    <p>请在这里输入内容.....</p>
+                </div>
+
+        </div>
+        <div class="layui-form-item">
+<!--            <form enctype="multipart/form-data" id="fileform">-->
+                <label class="layui-form-label required">文件：</label>
+                <div class="layui-input-block">
+                    <input type="file" name="file" id="file" placeholder="多文件需求请打包上传" value="" class="layui-input" >
+
+                </div>
+
+
+
+                <div id="tishi"></div>
+
+
+<!--            </form>-->
+
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal" id="upload" lay-submit lay-filter="saveBtn">确认发布</button>
+                <button id="btn1" class="layui-btn layui-btn-normal" style="margin-left: 200px" >删除文件</button>
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+
+    layui.use(['layer', 'wangEditor', 'laydate','cookie','element','form'], function () {
+
+        var $ = layui.jquery,
+            layer = layui.layer,
+            wangEditor = layui.wangEditor,
+            cookie = layui.cookie,
+            form = layui.form,
+            element = layui.element;
+        element.init();
+
+        $(function () {
+
+            //获取新闻分类列表
+            $.ajax({
+                url: '../public/getcategory',
+                method: 'POST',
+                async: false,
+                success: (res) => {
+
+                    kai = '<select id="news_category"><option value="-1">--选择类别--</optin>'
+
+                    var zh = " "
+                    var wei = '</select>'
+                    for (var i = 0; i < res.object.length; i++) {
+                        zh += '<option value="' + res.object[i].id + '">' + res.object[i].category + '</option>'
+                    }
+                    $("#div1").html(kai + zh + wei);
+                },
+            })
+
+        })
+
+        var editor = new wangEditor('#editor');
+        editor.customConfig.uploadImgServer = "api/upload.json";
+        editor.customConfig.uploadFileName = 'image';
+        editor.customConfig.pasteFilterStyle = false;
+        editor.customConfig.uploadImgMaxLength = 5;
+
+
+        editor.customConfig.customAlert = function (info) {
+            layer.msg(info);
+        };
+
+        editor.create();
+        console.log(form.val("news"))
+
+        //获取父页面的数据
+        var htmldata = parent.htmldata;
+
+        console.log(htmldata)
+        //插入数据
+        if (typeof (htmldata) != "undefined" && htmldata != null) {
+            form.val("news", {
+                "title": htmldata.title,
+                "author": htmldata.author
+            })
+
+            if (htmldata.name != null)
+                $("#tishi").html('<p>已上传文件：' + htmldata.name + '&nbsp' +
+                    '&nbsp&nbsp&nbsp若需修改直接选择即可！</p>')
+
+            var select = 'dd[lay-value=' + htmldata.category_id + ']';
+            $('#news_category').siblings("div.layui-form-select").find('dl').find(select).click();
+            editor.txt.clear()
+            editor.txt.html(htmldata.content)
+
+
+
+        }
+        form.on("submit(saveBtn)",function (obj) {
+
+            if(typeof(htmldata)=="undefined"|| htmldata==null||htmldata==""){
+
+                var formData = new FormData();
+                    if ($("#file").val() == "")
+                        formData.append("file", null)
+
+                    formData.append("file", $('#file')[0].files[0])
+
+                    formData.append("title", obj.field.title)
+                    formData.append("author", obj.field.author)
+
+                    if ($("#news_category option:selected").val() == -1) {
+                        layer.msg("请选择新闻分类！");
+                        return false;
+                    }
+                    formData.append("category_id", $("#news_category option:selected").val())
+                    formData.append("content", editor.txt.html())
+
+                    console.log(formData.get("title"));
+                    $.ajax({
+                        url: '../admin/upload',
+                        async: false,
+                        data: formData,
+                        cache: false,
+                        method: "POST",
+                        contentType: false,
+                        processData: false,
+                        success: (data) => {
+                            if (data.flag == 1) {
+                                layer.msg("发布成功！", {time: 2000}, function () {
+                                   // location.reload();
+                                })
+
+                            } else {
+                                layer.msg("发布失败！")
+                            }
+                        },
+
+                    })
+            }else{
+                var formData = new FormData();
+                if ($("#file").val() == ""||$("#file").val()==null)
+                       formData.append("file", null)
+
+                formData.append("file", $('#file')[0].files[0])
+                formData.append("id",htmldata.id)
+
+                formData.append("title", obj.field.title)
+                formData.append("author", obj.field.author)
+                formData.append("fid",htmldata.fid)
+                formData.append("oldpath",htmldata.path)
+                if ($("#news_category option:selected").val() == -1) {
+                    layer.msg("请选择新闻分类！");
+                    return false;
+                }
+                formData.append("category_id", $("#news_category option:selected").val())
+                formData.append("content", editor.txt.html())
+
+
+                // 当前弹出层，防止ID被覆盖
+                var parentIndex = layer.index;
+                $.ajax({
+                    url: '../admin/update_news',
+                    async: false,
+                    data: formData,
+                    cache: false,
+                    method: "POST",
+                    contentType: false,
+                    processData: false,
+                    success: (data) => {
+                        if (data.flag == 1) {
+                            layer.msg("修改成功！", {time: 2000}, function () {
+                                htmldata="";
+                                layer.close(parentIndex);
+                                //tableId表格id  重载表格
+                                parent.layui.table.reload('currentTableId', {page: {curr: 1}});
+
+                            })
+
+                        } else {
+                            layer.msg("发布失败！")
+                        }
+                    },
+
+                })
+            }
+            return false;
+        })
+
+
+
+
+
+
+
+
+        $("#btn1").click(function () {
+
+        var obj = document.getElementById('file') ;
+        obj.outerHTML=obj.outerHTML;
+         })
+
+
+    });
+
+
+</script>

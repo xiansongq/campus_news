@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.Adminmapper">
+    <select id="login"  resultType="admin">
+        select * from admin where userid=#{userid} and password=#{password}
+    </select>
+    <insert id="upload_news" parameterType="news"   useGeneratedKeys="true" keyProperty="id" keyColumn="id"   >
+        insert into news(title,author,content,category_id) values(#{title},#{author},#{content},#{category_id})
+
+
+    </insert>
+    <insert id="save_file" parameterType="myfile" useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
+        insert into file(news_id,name,uuid,type,size,path) values (#{news_id},#{name},#{uuid},#{type},#{size},#{path})
+
+
+    </insert>
+    <delete id="delete_news">
+        delete from news where id=#{id}
+    </delete>
+    <delete id="delete_file">
+        delete from file where news_id=#{news_id}
+    </delete>
+
+
+    <insert id="add_user" parameterType="user">
+        insert into user(userid,name,gender,phone,college,major) values(#{userid},#{name},#{gender},#{phone},#{college},#{major})
+    </insert>
+
+    <delete id="delete_user">
+        delete from user where userid=#{userid}
+    </delete>
+    <update id="reset_password">
+        update user set password="888888" where userid=#{userid}
+    </update>
+    <update id="update_user" parameterType="user">
+        update user set name=#{name},phone=#{phone},gender=#{gender},college=#{college},major=#{major},openid=#{openid}
+            where userid=#{userid}
+    </update>
+
+    <select id="list_user" parameterType="user" resultType="user">
+        select * from user
+        <where>
+            <if test="userid!=null and userid!=''">
+                and userid=#{userid}
+            </if>
+            <if test="college!=null and college!= ''">
+                and college=#{college}
+            </if>
+            <if test="phone!=null and phone!=''">
+                and phone=#{phone}
+            </if>
+            <if test="name!=null and name!=''">
+                and name=#{name}
+            </if>
+            <if test="gender!=null and gender!=''">
+                and gender=#{gender}
+            </if>
+            <if test="major!=null and major!=''">
+                and major=#{major}
+            </if>
+        </where>
+    </select>
+
+    <select id="comment_list"  resultType="comment">
+        select * from comment
+        <where>
+            <if test="userid!=null and userid!=''">
+                and userid=#{userid}
+            </if>
+            <if test="content!=null and content!=''">
+                and content like CONCAT('%',#{content,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="news_id!=null and news_id!=''">
+                and news_id=#{news_id}
+            </if>
+        </where>
+    </select>
+    <delete id="delete_comment">
+        delete from comment where id=#{id}
+    </delete>
+
+    <insert id="add_campus_n" parameterType="campus_n">
+        insert into  campus_n (name,gender,resume,motto,elegant) values (#{name},#{gender},#{resume},#{motto},#{elegant})
+    </insert>
+
+    <select id="campus_list" resultType="campus_n">
+        select * from campus_n
+        <where>
+            <if test="name!=null and name!=''">
+                and name=#{name}
+            </if>
+            <if test="gender!=null and gender!=''">
+                and gender=#{gender}
+
+            </if>
+            <if test="motto!=null and motto!=''">
+                and motto like CONCAT('%',#{motto,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </select>
+
+    <delete id="delete_elegant">
+        delete from campus_n where id=#{id}
+    </delete>
+
+    <update id="update_campus" parameterType="campus_n">
+        update campus_n set name=#{name},resume=#{resume},gender=#{gender},motto=#{motto},elegant=#{elegant}
+        where id=#{id}
+    </update>
+
+    <update id="update_news" parameterType="news">
+        update news set title=#{title},author=#{author},content=#{content},category_id=#{category_id}
+        where id=#{id}
+    </update>
+
+    <update id="update_myfile" parameterType="myfile">
+        update file  set  name=#{name},uuid=#{uuid},type=#{type},size=#{size},path=#{path}
+        where id=#{id}
+    </update>
+
+</mapper>
