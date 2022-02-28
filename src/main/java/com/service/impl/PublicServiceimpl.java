@@ -22,4 +22,9 @@ public class PublicServiceimpl implements PublicService {
     public List<News> select_all(String title,String author) {
         return mp.select_all(title, author);
     }
+
+    @Override
+    public int add_tourist(String id) {
+        return mp.add_tourist(id);
+    }
 }

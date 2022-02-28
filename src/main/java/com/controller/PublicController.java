@@ -2,11 +2,10 @@ package com.controller;
 
 import com.daomain.Message;
 import com.daomain.News;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.service.PublicService;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +16,8 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/public")
-public class PublicControl {
+@CrossOrigin
+public class PublicController {
     @Autowired
     Message message;
     @Autowired
@@ -27,6 +27,7 @@ public class PublicControl {
     public Message test1(HttpServletRequest request){
         List<Map<String,String>> list=publicService.findAll();
         message.setFlag(1);
+        message.setObject(list);
         request.getSession().setAttribute("category",list);
         return message;
     }
@@ -59,6 +60,11 @@ public class PublicControl {
         jsonObject.put("msg","数据请求成功！");
 
         return jsonObject;
+    }
+
+    @RequestMapping("/add_tourist")
+    public void test4(String id){
+          publicService.add_tourist(id);
     }
 
 

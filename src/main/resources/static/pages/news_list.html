@@ -233,6 +233,15 @@
                     area: [openWH[0] + 'px', openWH[1] + 'px'],
                     offset: [openWH[2] + 'px', openWH[3] + 'px'],
                     content:content,
+                    success:function () {
+                        $.ajax({
+                            url:'../public/add_tourist',
+                            data:{"id":obj.data.id},
+                            method:"POST",
+                            async:true,
+
+                        })
+                    }
                 });
                 $(window).on("resize", function () {
                     layer.full(index);

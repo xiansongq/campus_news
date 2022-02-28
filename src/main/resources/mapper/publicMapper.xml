@@ -16,4 +16,8 @@
             </if>
         </where>
     </select>
+
+    <update id="add_tourist">
+        update news set tourist_number=tourist_number+1 where id=#{id}
+    </update>
 </mapper>

@@ -5,6 +5,7 @@ import com.service.AdminService;
 import org.apache.ibatis.annotations.Param;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,6 +25,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/admin")
+@CrossOrigin
 public class AdminController {
 
     @Autowired
@@ -103,10 +105,10 @@ public class AdminController {
         /*转为小写*/
         code = code.toLowerCase();
         captcha = captcha.toLowerCase();
-        System.out.println(username);
-        System.out.println(password);
-        System.out.println(code);
-        System.out.println(captcha);
+//        System.out.println(username);
+//        System.out.println(password);
+//        System.out.println(code);
+//        System.out.println(captcha);
         Admin admin = adminService.login(username, password);
         int flag = code.compareTo(captcha);
         if (flag == 0 && admin != null) {

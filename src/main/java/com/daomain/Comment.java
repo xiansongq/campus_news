@@ -1,10 +1,17 @@
 package com.daomain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
 
 @Component
 public class Comment {
-    String id,news_id,userid,content,time;
+    String id,news_id,userid,content;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")//页面写入数据库时格式化
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone = "GMT+8")  //查询输出时格式转换
+    Date time;
 
     public String getId() {
         return id;
@@ -38,11 +45,11 @@ public class Comment {
         this.content = content;
     }
 
-    public String getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
@@ -53,7 +60,7 @@ public class Comment {
                 ", news_id='" + news_id + '\'' +
                 ", userid='" + userid + '\'' +
                 ", content='" + content + '\'' +
-                ", time='" + time + '\'' +
+                ", time=" + time +
                 '}';
     }
 }

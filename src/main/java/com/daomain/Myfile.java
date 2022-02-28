@@ -1,11 +1,17 @@
 package com.daomain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
 
 @Component
 public class Myfile {
-    String id,news_id,name,uuid,type,size,path,time;
-
+    String id,news_id,name,uuid,type,size,path;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")//页面写入数据库时格式化
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")  //查询输出时格式转换
+    Date time;
 
     public String getId() {
         return id;
@@ -63,17 +69,17 @@ public class Myfile {
         this.path = path;
     }
 
-    public String getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
     @Override
     public String toString() {
-        return "File{" +
+        return "Myfile{" +
                 "id='" + id + '\'' +
                 ", news_id='" + news_id + '\'' +
                 ", name='" + name + '\'' +
@@ -81,7 +87,7 @@ public class Myfile {
                 ", type='" + type + '\'' +
                 ", size='" + size + '\'' +
                 ", path='" + path + '\'' +
-                ", time='" + time + '\'' +
+                ", time=" + time +
                 '}';
     }
 }

@@ -1,13 +1,21 @@
 package com.daomain;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
 
 @Component
 public class News {
-    String id,title,author,content,likes_number,collections_number,category_id,time;
-    String fid,news_id,name,uuid,type,size,path,ftime;
+    String id, title, author, content, likes_number, collections_number, category_id,tourist_number;
+    String fid, news_id, name, uuid, type, size, path;
 
-
+    /* hh:mm:ss*/
+    @DateTimeFormat(pattern = "yyyy-MM-dd")//页面写入数据库时格式化
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")  //查询输出时格式转换
+            Date time, ftime;
 
     public String getId() {
         return id;
@@ -65,15 +73,13 @@ public class News {
         this.category_id = category_id;
     }
 
-    public String getTime() {
-        return time;
+    public String getTourist_number() {
+        return tourist_number;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setTourist_number(String tourist_number) {
+        this.tourist_number = tourist_number;
     }
-
-   /*------分隔符-------*/
 
     public String getFid() {
         return fid;
@@ -131,11 +137,19 @@ public class News {
         this.path = path;
     }
 
-    public String getFtime() {
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
+
+    public Date getFtime() {
         return ftime;
     }
 
-    public void setFtime(String ftime) {
+    public void setFtime(Date ftime) {
         this.ftime = ftime;
     }
 
@@ -149,7 +163,7 @@ public class News {
                 ", likes_number='" + likes_number + '\'' +
                 ", collections_number='" + collections_number + '\'' +
                 ", category_id='" + category_id + '\'' +
-                ", time='" + time + '\'' +
+                ", tourist_number='" + tourist_number + '\'' +
                 ", fid='" + fid + '\'' +
                 ", news_id='" + news_id + '\'' +
                 ", name='" + name + '\'' +
@@ -157,7 +171,8 @@ public class News {
                 ", type='" + type + '\'' +
                 ", size='" + size + '\'' +
                 ", path='" + path + '\'' +
-                ", ftime='" + ftime + '\'' +
+                ", time=" + time +
+                ", ftime=" + ftime +
                 '}';
     }
 }

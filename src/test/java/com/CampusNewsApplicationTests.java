@@ -2,7 +2,7 @@ package com;
 
 import com.daomain.News;
 import com.daomain.User;
-import com.daoto.news_file;
+
 import com.mapper.Publicmapper;
 import com.mapper.Usermapper;
 import com.service.UserService;

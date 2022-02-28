@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.Appmapper">
+    <select id="findall" resultType="news">
+        SELECT * FROM news WHERE category_id=(SELECT id FROM news_category WHERE category="首页")
+    </select>
+
+    <select id="select_id" resultType="news">
+        SELECT * ,n.id nid,f.id fid ,n.time ntime,f.time ftime FROM news n LEFT JOIN FILE f ON n.id=f.news_id  WHERE n.id=#{id}
+    </select>
+
+    <select id="select_bycid" resultType="news">
+        SELECT * ,n.id nid,f.id fid ,n.time ntime,f.time ftime FROM news n LEFT JOIN FILE f ON n.id=f.news_id  WHERE category_id=#{category_id}
+    </select>
+
+    <select id="likes" resultType="int">
+        select cout(*) from likes where newsid=#{id} and userid=#{userid}
+    </select>
+
+    <select id="cols" resultType="int">
+        select cout(*) from collection where news_id=#{id} and userid=#{userid}
+    </select>
+    <insert id="insert_coment">
+        insert into comment(news_id,userid,content) values (#{news_id},#{userid},#{content})
+    </insert>
+
+</mapper>
