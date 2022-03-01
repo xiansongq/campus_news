@@ -1,5 +1,6 @@
 package com.service.impl;
 
+import com.daomain.Campus_n;
 import com.daomain.Comment;
 import com.daomain.News;
 import com.mapper.Appmapper;
@@ -43,4 +44,51 @@ public class AppServiceimpl implements AppService {
     public int insert_coment(Comment comment) {
         return appmapper.insert_coment(comment);
     }
+
+    @Override
+    public List<Comment> comment_list(String news_id) {
+        return appmapper.comment_list(news_id);
+    }
+
+    @Override
+    public int insert_col(String news_id, String userid) {
+        return appmapper.insert_col(news_id,userid)& appmapper.add_col(news_id);
+    }
+
+    @Override
+    public int insert_likes(String news_id, String userid) {
+        return appmapper.insert_likes(news_id,userid)&appmapper.add_likes(news_id);
+    }
+
+    @Override
+    public int delete_col(String news_id, String userid) {
+
+        return appmapper.delete_col(news_id, userid)&appmapper.sub_col(news_id);
+    }
+
+    @Override
+    public int delete_likes(String news_id, String userid) {
+        return appmapper.delete_likes(news_id, userid)&appmapper.sub_likes(news_id);
+    }
+
+    @Override
+    public List<News> collection_list(String userid) {
+        return appmapper.collection_list(userid);
+    }
+
+    @Override
+    public List<Campus_n> campus_list() {
+        return appmapper.campus_list();
+    }
+
+    @Override
+    public Campus_n findby_id(String id) {
+        return appmapper.findby_id(id);
+    }
+
+    @Override
+    public int add_feedback(String content) {
+        return appmapper.add_feedback(content);
+    }
+
 }

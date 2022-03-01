@@ -1,14 +1,78 @@
 
 <div id="body">
 
-    <div id="title"></div>
-    <div id="info"></div>
-    <div id="likes"></div>
-    <div id="content"></div>
-    <div id="file" style="display: none">
-        <p id="p1"><span>附件：</span><span id="sp3"></span></p>
+    <div class="header">
+        <div class="title" ></div>
+        <div class="header-info">
+            <div class="author" ></div>
+            <div class="handup" >点赞:</div>
+            <div class="looks" >浏览:</div>
+            <div class="collection" >收藏:</div>
+            <div class="time" ></div>
+        </div>
+    </div>
+    <div class="content" >
+
+    </div>
+    <div class="file" style="display: none">
+        <p id="p1"><span class="name">附件：</span><span id="sp3"></span></p>
     </div>
 </div>
+<style>
+.header-info{
+
+    display: flex;
+    white-space: nowrap;
+    font-size: 16px;
+    color: #3F3F3F;
+    margin-top: 15px;
+    justify-content: center;
+}
+.author{
+    margin-left: 30px;
+}
+.handup{
+    margin-left: 40px;
+
+}
+.looks{
+    margin-left: 50px;
+
+}
+.collection{
+    margin-left: 60px;
+}
+.time{
+    margin-top: 2px;
+    margin-bottom: 0px;
+    margin-left: 70px;
+}
+.title{
+    font-size: 30px;
+    font-weight: bold;
+    color: #0c0f13;
+    text-align: center;
+    margin-top: 8px;
+    white-space :normal;
+}
+.content{
+    margin-top: 15px;
+    width: 100%;
+}
+.file{
+    height: 40px;
+    margin-bottom: 40px;
+    margin-top: 20px;
+}
+.name{
+    font-size: 23px;
+    color: red;
+}
+#a1{
+    color: blue;
+    font-size: 18px;
+}
+</style>
 <script type="text/javascript">
     layui.use(['layer'], function () {
         var $=layui.jquery,
@@ -16,19 +80,26 @@
         var newsdata=parent.newsdata;
 
 
-        var title='<h1>'+newsdata.title+'</h1>'
-        $("#title").append(title)
-        var info='<spanp id="sp1">作者：'+newsdata.author+'&nbsp&nbsp&nbsp&nbsp&nbsp日期：'+newsdata.time+'</spanp>'
-        $("#info").append(info)
-        $("#content").append(newsdata.content)
-        var likes='<span id="sp2">点赞数：'+newsdata.likes_number+'&nbsp&nbsp&nbsp&nbsp&nbsp'+'收藏数：'+newsdata.collections_number+'</span>'
-        $("#likes").append(likes)
+
+
+        $(".title").append(newsdata.title)
+        $(".author").append(newsdata.author)
+        $(".handup").append(newsdata.likes_number)
+        $(".looks").append(newsdata.tourist_number)
+        $(".collection").append(newsdata.collections_number)
+        $(".time").append(newsdata.time)
+
+        // var info='<spanp id="sp1">作者：'+newsdata.author+'&nbsp&nbsp&nbsp&nbsp&nbsp日期：'+newsdata.time+'</spanp>'
+        // $("#info").append(info)
+         $(".content").append(newsdata.content)
+        // var likes='<span id="sp2">点赞数：'+newsdata.likes_number+'&nbsp&nbsp&nbsp&nbsp&nbsp'+'收藏数：'+newsdata.collections_number+'</span>'
+        // $("#likes").append(likes)
         if(newsdata.news_id!=null){
-            $("#file").css({"display":"block"})
+            $(".file").css({"display":"block"})
             $("#sp3").append('<a id="a1" href="javascript:void(0)">'+newsdata.name+'</a>')
         }
         $("#a1").click(function () {
-            alert("123")
+
             // $.ajax({
             //     url:'../admin/getfile',
             //     data:{"path":newsdata.path,"name":newsdata.name},
@@ -40,7 +111,7 @@
             //     }
             // })
             console.log("ajaxDownloadSynchronized");
-            var url = "http://localhost:8085/admin/getfile";
+            var url = "http://localhost:8085/admin/getfile";   // 路径要修改
             var name = newsdata.name;
             var path = newsdata.path;
             var form = $("<form></form>").attr("action", url).attr("method", "post");

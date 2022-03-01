@@ -40,4 +40,13 @@ public interface AdminService {
 
     /*更新对应的文件信息*/
     int update_myfile(Myfile myfile);
+
+    /*上传文件*/
+    int insert_myfile(Myfile myfile);
+    /*查询反馈列表*/
+    List<Feedback> feedback_list(String content);
+    /*根据反馈ID删除反馈列表*/
+    int delete_feed(String id);
+
+
 }

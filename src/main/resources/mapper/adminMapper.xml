@@ -118,4 +118,17 @@
         where id=#{id}
     </update>
 
+    <select id="feedback_list" resultType="feedback">
+        select * from feedback
+        <where>
+            <if test="content!=null and content!=''">
+                and content like CONCAT('%',#{content,jdbcType=VARCHAR},'%')
+
+            </if>
+        </where>
+    </select>
+    <delete id="delete_feed">
+        delete from feedback where id=#{id}
+    </delete>
+
 </mapper>

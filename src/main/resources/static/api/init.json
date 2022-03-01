@@ -76,6 +76,12 @@
             }
           ]
         },
+        {
+          "title": "反馈列表",
+          "href": "pages/feedback_list.html",
+          "icon": "fa fa-window-maximize",
+          "target": "_self"
+        },
 
         {
           "title": "异常页面",

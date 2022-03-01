@@ -94,8 +94,9 @@
                 {field: 'author', width: 120, title: '作者'},
                 {field: 'likes_number', width: 80, title: '点赞数',sort:true},
                 {field: 'collections_number', width:80, title: '收藏数', sort: true},
+                {field: 'tourist_number',  width: 80, title: '游览数',sort:true},
                 {field: 'time', width: 160, title: '发布时间', sort: true},
-                {field: 'name',  width: 300, title: '附件'},
+
                 {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
             ]],
             limits: [10, 15, 20, 25, 50, 100],
@@ -223,7 +224,7 @@
                 var openWH = miniPage.getOpenWidthHeight();
 
                 newsdata=obj.data
-                console.log(htmldata)
+                // console.log(newsdata)
                 var index = layer.open({
                     title: '游览新闻',
                     type: 1,

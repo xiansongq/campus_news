@@ -416,25 +416,52 @@ public class AdminController {
         return message;
     }
 
+
+    /**
+     * 这里逻辑性很强 可以好好看看
+     * @param file
+     * @param id
+     * @param fid
+     * @param oldpath
+     * @param title
+     * @param author
+     * @param category_id
+     * @param content
+     * @param request
+     * @return
+     */
     @RequestMapping("/update_news")
     public Message test18(MultipartFile file,@Param("id") String id, @Param("fid") String fid,@Param("oldpath") String oldpath,@Param("titile") String title, @Param("author") String author,
                          @Param("category_id") String category_id, @Param("content") String content,
                          HttpServletRequest request
     ) {
 
+        //用来记录原文件是否为空
+        boolean oldflag=false;
         News news = new News();
         Myfile myfile = new Myfile();
         System.out.println(file);
         if (file != null) {
-            //删除原文件
-            File file1=new File(oldpath);
-            if(file1.delete()){
+            System.out.println(oldpath);
+            //原文件不空的情况下
+            if(oldpath!=null&&"".equals(oldpath)==false&&"null".equals(oldpath)==false){
+                oldflag=true;
+                //删除原文件
+                File file1=new File(oldpath);
 
-            }else {
-                message.setFlag(0);
-                System.out.println("原文件删除失败！");
-                return message;
+
+                if(file1.delete()){
+
+                }else {
+                    message.setFlag(0);
+                    System.out.println("原文件删除失败！");
+                    return message;
+                }
+
+            }else{
+                oldflag=false;
             }
+
             //生成uuid 为新的文件名
 
             String uuid = UUID.randomUUID().toString().replaceAll("-", "");
@@ -443,10 +470,10 @@ public class AdminController {
             String size = String.valueOf(file.getSize());
             String savePath = request.getServletContext().getRealPath("/WEB-INF/upload");
 
-            System.out.println(name);
-            System.out.println(type);
-            System.out.println(size);
-            System.out.println(type);
+//            System.out.println(name);
+//            System.out.println(type);
+//            System.out.println(size);
+//            System.out.println(type);
             //保存目录
             File filepath = new File(savePath);
             //目录不存在 创建目录
@@ -474,23 +501,80 @@ public class AdminController {
         } else {
             myfile = null;
         }
-        int flag1=1,flag2=1;
-        if(fid!=""&&myfile!=null){
-            myfile.setId(fid);
-            flag1=adminService.update_myfile(myfile);
-        }
         news.setAuthor(author);
         news.setCategory_id(category_id);
         news.setContent(content);
         news.setTitle(title);
         news.setId(id);
-         flag2 = adminService.update_news(news);
+        int flag1=1,flag2=1;
+        //原文件不空的情况
+        if(oldflag&&fid!=""&&myfile!=null){
+            myfile.setId(fid);
+            //更新文件信息即可
+            flag1=adminService.update_myfile(myfile);
+
+            flag2 = adminService.update_news(news);
+        }
+        //原文件为空的情况下  上传新文件
+        else{
+            myfile.setNews_id(news.getId());
+            flag2 = adminService.insert_myfile(myfile);
+        }
         if (flag1 != 0&&flag2!=0) {
             message.setFlag(1);
         } else
             message.setFlag(0);
         return message;
     }
+
+
+    /**
+     * 查询 feedback
+     * @param content
+     * @param limit
+     * @param page
+     * @return
+     */
+    @RequestMapping("/feedback_list")
+    public JSONObject test19(String content,Integer limit,Integer page){
+        JSONObject jsonObject = new JSONObject();
+
+        List<Feedback> list =adminService.feedback_list(content);
+        List<Feedback> list1=new ArrayList<>();
+
+        for(int i=(page-1)*limit,j=1;i<list.size()&&j<=limit;++i,++j){
+
+            list1.add(list.get(i));
+        }
+        //PageInfo<News> data = new PageInfo<News>(list1);
+        jsonObject.put("data",list1);
+        jsonObject.put("code",0);
+        jsonObject.put("count",list.size());
+        jsonObject.put("msg","数据请求成功！");
+
+        return jsonObject;
+
+    }
+
+    /**
+     * 删除 feedback 数据
+     * @param id
+     * @return
+     */
+    @RequestMapping("/delete_feed")
+    public Message test20(String id[]){
+        int flag;
+        for (String s : id) {
+            flag=adminService.delete_feed(s);
+            if(flag==0){
+                message.setFlag(0);
+                return message;
+            }
+        }
+        message.setFlag(1);
+        return message;
+    }
+
 
 
 }

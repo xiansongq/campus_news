@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mapper.Appmapper">
     <select id="findall" resultType="news">
-        SELECT * FROM news WHERE category_id=(SELECT id FROM news_category WHERE category="首页")
+        SELECT * FROM news WHERE category_id=(SELECT id FROM news_category WHERE category="首页") ORDER BY time DESC
     </select>
 
     <select id="select_id" resultType="news">
@@ -10,18 +10,66 @@
     </select>
 
     <select id="select_bycid" resultType="news">
-        SELECT * ,n.id nid,f.id fid ,n.time ntime,f.time ftime FROM news n LEFT JOIN FILE f ON n.id=f.news_id  WHERE category_id=#{category_id}
+        SELECT * ,n.id nid,f.id fid ,n.time ntime,f.time ftime FROM news n LEFT JOIN FILE f ON n.id=f.news_id  WHERE category_id=#{category_id} ORDER BY n.time DESC
     </select>
 
     <select id="likes" resultType="int">
-        select cout(*) from likes where newsid=#{id} and userid=#{userid}
+        select count(*) from likes where news_id=#{id} and userid=#{userid}
     </select>
 
     <select id="cols" resultType="int">
-        select cout(*) from collection where news_id=#{id} and userid=#{userid}
+        select count(*) from collection where news_id=#{id} and userid=#{userid}
     </select>
     <insert id="insert_coment">
         insert into comment(news_id,userid,content) values (#{news_id},#{userid},#{content})
     </insert>
 
+    <select id="comment_list" resultType="comment">
+        SELECT * FROM COMMENT   WHERE news_id=#{news_id} ORDER BY TIME DESC
+    </select>
+    <insert id="insert_col">
+        insert into collection(news_id,userid) values (#{news_id},#{userid})
+    </insert>
+    <insert id="insert_likes">
+        insert into likes (news_id,userid)
+        values (#{news_id},#{userid});
+    </insert>
+    <delete id="delete_col">
+        delete from collection where news_id=#{news_id} and userid=#{userid}
+    </delete>
+    <delete id="delete_likes">
+        delete from likes  where news_id=#{news_id} and userid=#{userid}
+    </delete>
+    <update id="add_likes">
+        update news
+        set likes_number =likes_number+1
+        where id=#{news_id};
+    </update>
+
+    <update id="add_col">
+        update news set collections_number=collections_number+1 where id=#{news_id}
+    </update>
+
+    <update id="sub_likes">
+        update news
+        set likes_number =likes_number-1
+        where id=#{news_id};
+    </update>
+
+    <update id="sub_col">
+        update news set collections_number=collections_number-1 where id=#{news_id}
+    </update>
+
+    <select id="collection_list" resultType="news">
+        SELECT * FROM news WHERE id IN (SELECT news_id FROM collection WHERE userid=#{userid})
+    </select>
+    <select id="campus_list" resultType="campus_n">
+        select * from campus_n
+    </select>
+    <select id="findby_id" resultType="campus_n">
+        select * from campus_n where id=#{id}
+    </select>
+    <insert id="add_feedback">
+        insert into feedback(content) values (#{content})
+    </insert>
 </mapper>

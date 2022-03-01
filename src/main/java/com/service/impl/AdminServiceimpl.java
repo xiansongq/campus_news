@@ -109,5 +109,20 @@ public class AdminServiceimpl implements AdminService {
         return mp.update_myfile(myfile);
     }
 
+    @Override
+    public int insert_myfile(Myfile myfile) {
+        return mp.save_file(myfile);
+    }
+
+    @Override
+    public List<Feedback> feedback_list(String content) {
+        return mp.feedback_list(content);
+    }
+
+    @Override
+    public int delete_feed(String id) {
+        return mp.delete_feed(id);
+    }
+
 
 }
