@@ -5,8 +5,11 @@ import com.mapper.Usermapper;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("UserService")
+@Transactional(propagation= Propagation.REQUIRED)
 public class UserServiceimpl implements UserService {
     @Autowired
     Usermapper mp;

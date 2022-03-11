@@ -7,10 +7,13 @@ import com.mapper.Appmapper;
 import com.service.AppService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service("AppService")
+@Transactional(propagation= Propagation.REQUIRED)
 public class AppServiceimpl implements AppService {
 
     @Autowired

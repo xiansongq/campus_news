@@ -172,13 +172,13 @@
         });
 
         table.on('tool(currentTableFilter)', function (obj) {
-
+            //console.log(obj.event)
             if (obj.event === 'edit') {
 
                 var content = miniPage.getHrefContent('pages/upload_news.html');
                 var openWH = miniPage.getOpenWidthHeight();
                  htmldata=obj.data
-                console.log(htmldata)
+               // console.log(htmldata)
                 var index = layer.open({
                     title: '编辑新闻',
                     type: 1,
@@ -250,7 +250,8 @@
                 return false;
             }
             else if(obj.event==='comment'){
-                var content = miniPage.getHrefContent('pages/comment_list.html');
+
+                var content1 = miniPage.getHrefContent('pages/comment_list.html');
                 var openWH = miniPage.getOpenWidthHeight();
 
                 newsid=obj.data.id
@@ -262,14 +263,15 @@
                     shadeClose: true,
                     area: [openWH[0] + 'px', openWH[1] + 'px'],
                     offset: [openWH[2] + 'px', openWH[3] + 'px'],
-                    content:content,
+                    content:content1,
                     cancel:function () {
 
-                        location.reload()
-                        // layui.table.reload('currentTableId', {page: {curr: 1}});
+                       // location.reload()
+                        //layui.table.reload('currentTableId', {page: {curr: 1}});
                     },
                     end:function () {
-                        location.reload()
+                        //location.reload()
+                       // layui.table.reload('currentTableId', {page: {curr: 1}});
                     }
                 });
                 $(window).on("resize", function () {

@@ -57,7 +57,7 @@ public class UserController {
         }
         return message;
     }
-    /*用户登录*/
+    /*修改密码*/
     @RequestMapping("/modif")
     @ResponseBody()
     public Message test3(@RequestBody JSONObject jsonObject){
