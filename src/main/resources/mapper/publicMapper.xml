@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mapper.Publicmapper">
 <select id="findAll" resultType="java.util.HashMap">
-    select * from News_category
+    select * from news_category
 </select >
 
     <select id="select_all" resultType="news" parameterType="int">
-        SELECT * ,n.id nid,f.id fid ,n.time ntime,f.time ftime FROM news n LEFT JOIN FILE f ON n.id=f.news_id
+        SELECT * ,n.id nid,f.id fid ,n.time ntime,f.time ftime FROM news n LEFT JOIN file f ON n.id=f.news_id
         <where>
             <if test="title!=null and title!=''">
                 and title like CONCAT('%',#{title,jdbcType=VARCHAR},'%')

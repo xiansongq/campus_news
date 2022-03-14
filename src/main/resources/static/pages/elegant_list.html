@@ -110,7 +110,7 @@
                 var openWH = miniPage.getOpenWidthHeight();
 
                 var index = layer.open({
-                    title: '添加用户',
+                    title: '添加人物',
                     type: 1,
                     shade: 0.2,
                     maxmin:true,
@@ -214,7 +214,7 @@
                 var openWH = miniPage.getOpenWidthHeight();
                 elegantdata=obj.data
                 var index = layer.open({
-                    title: '添加用户',
+                    title: '查看用户',
                     type: 1,
                     shade: 0.2,
                     maxmin:true,
@@ -222,6 +222,13 @@
                     area: [openWH[0] + 'px', openWH[1] + 'px'],
                     offset: [openWH[2] + 'px', openWH[3] + 'px'],
                     content: content,
+                    end:function () {
+                        elegantdata=""
+                    },
+                    success:function () {
+                        elegantdata=""
+                    }
+
                 });
                 $(window).on("resize", function () {
                     layer.full(index);
