@@ -211,12 +211,13 @@
                 layer.msg('验证码不能为空');
                 return false;
             }
+            //  网络请求组件
             $.ajax({
                 url: '../admin/login',
                 data: {"username": data.username, 'password': data.password, 'captcha': data.captcha},
-                method: 'GET',
-                async: false,
-                success: (data) => {
+                method: 'GET',   //请求方法 GET POST
+                async: false,   // 异步还是同步请求  false 的话就是异步请求  异步的话就是在请求完成之前 游览器是锁定状态
+                success: (data) => {  //请求失败 执行回调函数 error
                     if (data.flag == 1) {
                         //获取新闻分类数据 存cookie
                         $.ajax({

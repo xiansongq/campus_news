@@ -28,7 +28,7 @@ public class AdminServiceimpl implements AdminService {
         }
         else {
              int n=mp.upload_news(news); //insert 返回的是 受影响的行数
-            System.out.println("id------"+news.getId());
+           // System.out.println("id------"+news.getId());
             if(n==0) return 0;
             else
             {

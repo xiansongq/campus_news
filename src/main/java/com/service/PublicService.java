@@ -1,5 +1,7 @@
 package com.service;
 
+import com.daomain.Likes;
+import com.daomain.Myfile;
 import com.daomain.News;
 
 import java.util.List;
@@ -12,4 +14,6 @@ public interface PublicService {
     List<News> select_all(String title,String author);
     /*新闻游览量加一*/
     int add_tourist(String id);
+
+
 }

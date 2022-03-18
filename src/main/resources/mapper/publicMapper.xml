@@ -15,9 +15,12 @@
                 and author like CONCAT('%',#{author,jdbcType=VARCHAR},'%')
             </if>
         </where>
+        ORDER BY n.id DESC
     </select>
 
     <update id="add_tourist">
         update news set tourist_number=tourist_number+1 where id=#{id}
     </update>
+
+
 </mapper>

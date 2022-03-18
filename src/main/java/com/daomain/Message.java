@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 public class Message {
     private Integer flag; // 记录操作数据库的状态
     private String message; // 记录消息
-    private Object object;
+    private Object object;  //携带任何Java类都可以
 
     public Integer getFlag() {
         return flag;

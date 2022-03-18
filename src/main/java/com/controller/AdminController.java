@@ -138,10 +138,10 @@ public class AdminController {
             String size = String.valueOf(file.getSize());
             String savePath = request.getServletContext().getRealPath("/WEB-INF/upload");
 
-            System.out.println(name);
-            System.out.println(type);
-            System.out.println(size);
-            System.out.println(type);
+//            System.out.println(name);
+//            System.out.println(type);
+//            System.out.println(size);
+//            System.out.println(type);
             //保存目录
             File filepath = new File(savePath);
             //目录不存在 创建目录
@@ -150,7 +150,7 @@ public class AdminController {
             }
             //文件真是存储路径
             String path = savePath + File.separator + uuid + "." + type;
-            System.out.println(path);
+            //System.out.println(path);
             try {
                 file.transferTo(new File(path));
             } catch (IOException e) {
@@ -463,17 +463,13 @@ public class AdminController {
             }
 
             //生成uuid 为新的文件名
-
             String uuid = UUID.randomUUID().toString().replaceAll("-", "");
             String name = file.getOriginalFilename();
             String type = name.substring(name.lastIndexOf(".") + 1);
             String size = String.valueOf(file.getSize());
             String savePath = request.getServletContext().getRealPath("/WEB-INF/upload");
 
-//            System.out.println(name);
-//            System.out.println(type);
-//            System.out.println(size);
-//            System.out.println(type);
+
             //保存目录
             File filepath = new File(savePath);
             //目录不存在 创建目录
@@ -501,6 +497,7 @@ public class AdminController {
         } else {
             myfile = null;
         }
+
         news.setAuthor(author);
         news.setCategory_id(category_id);
         news.setContent(content);

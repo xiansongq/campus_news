@@ -1,5 +1,6 @@
 package com.mapper;
 
+import com.daomain.Likes;
 import com.daomain.Myfile;
 import com.daomain.News;
 
@@ -21,4 +22,5 @@ public interface Publicmapper {
     List<News> select_all(@Param("title") String title,@Param("author") String author);
     /*新闻游览量加一*/
     int add_tourist(String id);
+
 }

@@ -1,6 +1,8 @@
 package com.controller;
 
+import com.daomain.Likes;
 import com.daomain.Message;
+import com.daomain.Myfile;
 import com.daomain.News;
 import com.service.PublicService;
 import org.json.simple.JSONObject;

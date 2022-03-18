@@ -1,5 +1,7 @@
 package com.service.impl;
 
+import com.daomain.Likes;
+import com.daomain.Myfile;
 import com.daomain.News;
 import com.mapper.Publicmapper;
 import com.service.PublicService;
@@ -30,4 +32,5 @@ public class PublicServiceimpl implements PublicService {
     public int add_tourist(String id) {
         return mp.add_tourist(id);
     }
+
 }
