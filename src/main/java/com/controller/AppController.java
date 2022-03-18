@@ -1,5 +1,6 @@
 package com.controller;
 
+import cn.hutool.http.HtmlUtil;
 import com.daomain.Campus_n;
 import com.daomain.Comment;
 import com.daomain.Message;
@@ -130,6 +131,8 @@ public class AppController {
 
     @RequestMapping("add_feedback")
     public Message test16( String content){
+        //xss 攻击过滤
+        content= HtmlUtil.filter(content);
         message.setFlag(appService.add_feedback(content));
         return message;
     }

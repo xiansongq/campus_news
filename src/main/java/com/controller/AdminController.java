@@ -1,5 +1,6 @@
 package com.controller;
 
+import cn.hutool.http.HtmlUtil;
 import com.daomain.*;
 import com.service.AdminService;
 import org.apache.ibatis.annotations.Param;
@@ -125,6 +126,11 @@ public class AdminController {
                          @Param("category_id") String category_id, @Param("content") String content,
                          HttpServletRequest request
     ) {
+
+        /*防止xss攻击进行html转义*/
+        title= HtmlUtil.filter(title);
+        author=HtmlUtil.filter(author);
+
 
         News news = new News();
         Myfile myfile = new Myfile();
@@ -287,7 +293,11 @@ public class AdminController {
 
     @RequestMapping("/add_user")
     public Message test8(User user){
-        System.out.println(user.toString());
+
+        //xss 过滤
+        user.setUserid(HtmlUtil.filter(user.getUserid()));
+        user.setName(HtmlUtil.filter(user.getName()));
+
         int flag=adminService.add_user(user);
         if(flag==0)
             message.setFlag(0);
@@ -320,6 +330,10 @@ public class AdminController {
     }
     @RequestMapping("/update_user")
     public Message test11(User user){
+        //xss 过滤
+        user.setUserid(HtmlUtil.filter(user.getUserid()));
+        user.setName(HtmlUtil.filter(user.getName()));
+
         int flag=adminService.update_user(user);
         if(flag==1)
             message.setFlag(1);
@@ -365,6 +379,12 @@ public class AdminController {
 
     @RequestMapping("/add_campus_n")
     public Message test14(Campus_n campus_n){
+        /*防止xss攻击进行html转义*/
+        campus_n.setName(HtmlUtil.filter(campus_n.getName()));
+        campus_n.setMotto(HtmlUtil.filter(campus_n.getMotto()));
+//        campus_n.setElegant(HtmlUtil.filter(campus_n.getElegant()));
+        campus_n.setResume(HtmlUtil.filter(campus_n.getResume()));
+
         int flag=adminService.add_campus_n(campus_n);
         if(flag==1)
             message.setFlag(1);
@@ -411,6 +431,12 @@ public class AdminController {
 
     @RequestMapping("/update_elegant")
     public Message test17(Campus_n campus_n){
+        /*防止xss攻击进行html转义*/
+        campus_n.setName(HtmlUtil.filter(campus_n.getName()));
+        campus_n.setMotto(HtmlUtil.filter(campus_n.getMotto()));
+
+        campus_n.setResume(HtmlUtil.filter(campus_n.getResume()));
+
         int flag=adminService.update_campus(campus_n);
         message.setFlag(flag);
         return message;
@@ -436,11 +462,17 @@ public class AdminController {
                          HttpServletRequest request
     ) {
 
+
+        /*防止xss攻击进行html转义*/
+        title= HtmlUtil.filter(title);
+        author=HtmlUtil.filter(author);
+
+
         //用来记录原文件是否为空
         boolean oldflag=false;
         News news = new News();
         Myfile myfile = new Myfile();
-        System.out.println(file);
+
         if (file != null) {
             System.out.println(oldpath);
             //原文件不空的情况下
@@ -503,21 +535,41 @@ public class AdminController {
         news.setContent(content);
         news.setTitle(title);
         news.setId(id);
-        int flag1=1,flag2=1;
-        //原文件不空的情况
-        if(oldflag&&fid!=""&&myfile!=null){
+
+        System.out.println("fid"+fid);
+        int flag1=0,flag2=0;
+        //原文件不空的情况  且上传了新文件
+        if(oldflag&&myfile!=null){
+            System.out.println(1);
             myfile.setId(fid);
             //更新文件信息即可
             flag1=adminService.update_myfile(myfile);
 
             flag2 = adminService.update_news(news);
         }
-        //原文件为空的情况下  上传新文件
-        else{
+
+        //原文件为空 但是上传了新文件
+        else if(oldflag==false&&myfile!=null){
+            System.out.println(2);
+            // 直接上传新文件就好
             myfile.setNews_id(news.getId());
-            flag2 = adminService.insert_myfile(myfile);
+             flag1=  adminService.update_news(news);   //更新新闻信息
+            flag2 = adminService.insert_myfile(myfile);  //上传文件
         }
-        if (flag1 != 0&&flag2!=0) {
+        //原文件不空  没有上传文件
+        else if(oldflag&&myfile==null){
+            System.out.println(3);
+
+            flag2 = adminService.update_news(news);
+        }
+        //原文件为空 也没有上传文件
+        else if(oldflag==false&&myfile==null){
+            System.out.println(3);
+            flag2 = adminService.update_news(news);
+        }
+
+
+        if (flag1 != 0||flag2!=0) {
             message.setFlag(1);
         } else
             message.setFlag(0);
