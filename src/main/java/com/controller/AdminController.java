@@ -115,7 +115,7 @@ public class AdminController {
         if (flag == 0 && admin != null) {
             message.setFlag(1);
             message.setObject(admin);
-
+            request.getSession().setAttribute("user",admin);
         } else
             message.setFlag(0);
         return message;
