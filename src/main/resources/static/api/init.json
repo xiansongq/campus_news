@@ -81,22 +81,9 @@
           "href": "pages/feedback_list.html",
           "icon": "fa fa-window-maximize",
           "target": "_self"
-        },
-
-        {
-          "title": "异常页面",
-          "href": "",
-          "icon": "fa fa-home",
-          "target": "_self",
-          "child": [
-            {
-              "title": "404页面",
-              "href": "pages/404.html",
-              "icon": "fa fa-hourglass-end",
-              "target": "_self"
-            }
-          ]
         }
+
+
 
       ]
     }

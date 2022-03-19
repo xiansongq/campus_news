@@ -163,7 +163,7 @@
                 var userid= new Array();
                 for(var i=0;i<checkStatus.data.length;++i)
                     userid.push(checkStatus.data[i].userid);
-                console.log(userid)
+               // console.log(userid)
               layer.confirm("真的要删除吗?",function (index) {
                    $.ajax({
                         url: "../admin/batch_deleteuser",
