@@ -131,4 +131,8 @@
         delete from feedback where id=#{id}
     </delete>
 
+    <select id="getFile" resultType="myfile">
+        select * from file where id=#{id}
+    </select>
+
 </mapper>

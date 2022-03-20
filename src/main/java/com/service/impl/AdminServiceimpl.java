@@ -127,5 +127,10 @@ public class AdminServiceimpl implements AdminService {
         return mp.delete_feed(id);
     }
 
+    @Override
+    public Myfile getFile(String id) {
+        return mp.getFile(id);
+    }
+
 
 }

@@ -69,7 +69,8 @@ public interface Adminmapper {
     /*根据反馈ID删除反馈列表*/
     int delete_feed(String id);
 
-
+    /*根据id 查询某个文件的信息*/
+    Myfile getFile(String id);
 
 
 

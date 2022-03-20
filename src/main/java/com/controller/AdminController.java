@@ -229,8 +229,10 @@ public class AdminController {
     }
 
     @RequestMapping("/getfile")
-    public Message test6(String path, String name, HttpServletResponse response) throws IOException {
-        File file = new File(path);
+    public Message test6(String id,HttpServletResponse response) throws IOException {
+        //获取文件信息
+        Myfile myfile= adminService.getFile(id);
+        File file = new File(myfile.getPath());
         if (!file.exists()) {
             message.setFlag(0);
             message.setMessage("你要下载的资源已经被删除！");
@@ -239,14 +241,14 @@ public class AdminController {
         }
         //设置响应头，控制浏览器下载该文件 并将文件还原为原始的名称
         try {
-            response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(name, "UTF-8"));
+            response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(myfile.getName(), "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 //读取要下载的文件，保存到文件输入流
         FileInputStream in = null;
         try {
-            in = new FileInputStream(path);
+            in = new FileInputStream(myfile.getPath());
         } catch (FileNotFoundException e) {
             message.setFlag(0);
             message.setMessage("下载失败！");

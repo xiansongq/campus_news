@@ -98,6 +98,7 @@
             $(".file").css({"display":"block"})
             $("#sp3").append('<a id="a1" href="javascript:void(0)">'+newsdata.name+'</a>')
         }
+
         $("#a1").click(function () {
 
             // $.ajax({
@@ -111,12 +112,14 @@
             //     }
             // })
             //console.log("ajaxDownloadSynchronized");
-            var url = "http://121.37.165.227:8083/admin/getfile";   // 路径要修改
-            var name = newsdata.name;
-            var path = newsdata.path;
+            var url = "http://localhost:8083/admin/getfile";   // 路径要修改
+            // var name = newsdata.name;
+            // var path = newsdata.path;
+
+            var fid=newsdata.fid;
             var form = $("<form></form>").attr("action", url).attr("method", "post");
-            form.append($("<input></input>").attr("type", "hidden").attr("name", "name").attr("value", name));
-            form.append($("<input></input>").attr("type", "hidden").attr("name", "path").attr("value", path));
+            form.append($("<input></input>").attr("type", "hidden").attr("name", "id").attr("value", fid));
+            // form.append($("<input></input>").attr("type", "hidden").attr("name", "path").attr("value", path));
             form.appendTo('body').submit().remove();
 
         })

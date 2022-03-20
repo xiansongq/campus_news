@@ -117,7 +117,7 @@
         };
 
         editor.create();
-       // console.log(form.val("news"))
+        console.log(form.val("news"))
 
         //获取父页面的数据
         var htmldata = parent.htmldata;
@@ -162,7 +162,7 @@
                     formData.append("category_id", $("#news_category option:selected").val())
                     formData.append("content", editor.txt.html())
 
-                   // console.log(formData.get("title"));
+                    console.log(formData.get("title"));
                     $.ajax({
                         url: '../admin/upload',
                         async: false,

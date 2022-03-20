@@ -3,9 +3,9 @@
 spring:
   datasource:
     druid:
-      url: jdbc:mysql://121.37.165.227:3306/campus_news?serverTimezone=UTC
-      username: paper
-      password: paperuser
+      url: jdbc:mysql://49.234.32.56:3306/campus_news?serverTimezone=UTC
+      username: main
+      password: mainuser
       driver-class-name: com.mysql.cj.jdbc.Driver
   ervlet:
     multipart:
