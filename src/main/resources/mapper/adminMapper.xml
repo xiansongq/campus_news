@@ -12,7 +12,6 @@
     <insert id="save_file" parameterType="myfile" useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
         insert into file(news_id,name,uuid,type,size,path) values (#{news_id},#{name},#{uuid},#{type},#{size},#{path})
 
-
     </insert>
     <delete id="delete_news">
         delete from news where id=#{id}
