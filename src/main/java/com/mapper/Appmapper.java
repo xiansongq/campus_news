@@ -61,4 +61,7 @@ public interface Appmapper {
     /*添加反馈记录*/
     int add_feedback(String content);
 
+    /*清除用户授权信息*/
+    int cleanOpenid(String userid);
+
 }

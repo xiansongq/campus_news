@@ -40,5 +40,6 @@ public interface AppService {
     Campus_n findby_id(String id);
     /*添加反馈记录*/
     int add_feedback(String content);
-
+    /*清除用户授权信息*/
+    int cleanOpenid(String userid);
 }

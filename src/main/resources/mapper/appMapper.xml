@@ -72,4 +72,10 @@
     <insert id="add_feedback">
         insert into feedback(content) values (#{content})
     </insert>
+
+    <update id="cleanOpenid">
+        update user
+        set openid = null
+        where userid=#{userid};
+    </update>
 </mapper>

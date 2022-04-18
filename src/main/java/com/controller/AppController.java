@@ -137,4 +137,17 @@ public class AppController {
         return message;
     }
 
+    @RequestMapping("/cleanOpenid")
+    public Message test17(String userid){
+        int flag=appService.cleanOpenid(userid);
+        if (flag==1) {
+            message.setFlag(1);
+            message.setMessage("清除成功!");
+        }else{
+            message.setFlag(0);
+            message.setMessage("清除失败！");
+        }
+        return message;
+    }
+
 }

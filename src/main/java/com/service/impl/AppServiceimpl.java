@@ -94,4 +94,9 @@ public class AppServiceimpl implements AppService {
         return appmapper.add_feedback(content);
     }
 
+    @Override
+    public int cleanOpenid(String userid) {
+        return appmapper.cleanOpenid(userid);
+    }
+
 }
