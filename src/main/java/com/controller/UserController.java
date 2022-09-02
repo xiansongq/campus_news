@@ -127,7 +127,7 @@ public class UserController {
     public Message test5(String code){
         System.out.println(code);
         String appid = "wx1fc218d22639ab25";
-        //String secret="";  //小程序密钥
+        String secret="";  //小程序密钥
         String requestUrl = "https://api.weixin.qq.com/sns/jscode2session?appid="+appid+"&secret="+secret+"&js_code="+code+"&grant_type=authorization_code";
         System.out.println(requestUrl);
         HttpHeaders header = new HttpHeaders();
